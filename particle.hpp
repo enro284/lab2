@@ -1,63 +1,62 @@
 #ifndef PARTICLE_HPP
 #define PARTICLE_HPP
 
-class ParticleType
-{
-public:
-    ParticleType(const char *name, double mass, int charge)
-        : name_{name}, mass_{mass}, charge_{charge} {}
+class ParticleType {
+ private:
+  const char *name_;
+  const double mass_;
+  const int charge_;
 
-    const char *GetName() const;
-    const double GetMass() const;
-    const int GetCharge() const;
+ public:
+  ParticleType(const char *name, double mass, int charge)
+      : name_{name}, mass_{mass}, charge_{charge} {}
 
-    virtual void Print() const;
+  const char *GetName() const;
+  const double GetMass() const;
+  const int GetCharge() const;
 
-private:
-    const char *name_;
-    const double mass_;
-    const int charge_;
+  virtual void Print() const;
 };
 
-class ResonanceType : public ParticleType
-{
-    const double width_;
+class ResonanceType : public ParticleType {
+ public:
+  ResonanceType(const char *name, double mass, int charge, double width)
+      : ParticleType(name, mass, charge), width_{width} {}
 
-public:
-    ResonanceType(const char *name, double mass, int charge, double width)
-        : ParticleType(name, mass, charge), width_{width} {}
+  double GetWidth() const;
+  void Print() const;
 
-    double GetWidth();
-    void Print() const;
+ private:
+  const double width_;
 };
 
-class Particle
-{
-private:
-    static const int maxNumParticleType_{7};
-    static int numParticleType_;
-    static const ParticleType *particleTypeArray_[maxNumParticleType_];
-    int index_;
+class Particle {
+ public:
+  Particle(char *name, double pX = 0., double pY = 0., double pZ = 0.);
+  static void AddParticleType(const char *name, double mass, int charge,
+                              double width = 0.);
+  static void PrintParticleTypeArray();
 
-    double pX_, pY_, pZ_;
+  int const GetIndex() const;
+  void SetIndex(int index);
+  void SetIndex(const char *ParticleName);
+  void PrintParticle() const;
 
-    int FindParticle(const char *particleName_);
+  double GetMass() const;
+  double EnergyTot() const;
+  double InvMass(Particle &p);
 
-public:
-    Particle(char *name, double pX = 0., double pY = 0., double pZ = 0.);
-    static void AddParticleType(const char *name, double mass, int charge, double width = 0.);
-    static void PrintParticleTypeArray();
+  void SetP(double pX, double pY, double pZ);
 
-    int const GetIndex() const;
-    void SetIndex(int index);
-    void SetIndex(const char *ParticleName);
-    void PrintParticle() const;
+ private:
+  static const int maxNumParticleType_{7};
+  static int numParticleType_;
+  static const ParticleType *particleTypeArray_[maxNumParticleType_];
+  int index_;
 
-    double GetMass() const;
-    double EnergyTot() const;
-    double InvMass(Particle &p);
+  double pX_, pY_, pZ_;
 
-    void SetP(double pX, double pY, double pZ);
+  int FindParticle(const char *particleName_);
 };
 
 #endif
