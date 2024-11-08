@@ -12,8 +12,9 @@ class ParticleType {
       : name_{name}, mass_{mass}, charge_{charge} {}
 
   const char *GetName() const;
-  const double GetMass() const;
-  const int GetCharge() const;
+  double GetMass() const;
+  int GetCharge() const;
+  virtual double GetWidth() const;
 
   virtual void Print() const;
 };
@@ -32,21 +33,25 @@ class ResonanceType : public ParticleType {
 
 class Particle {
  public:
-  Particle(char *name, double pX = 0., double pY = 0., double pZ = 0.);
+  Particle();
+  Particle(const char *name, double pX = 0., double pY = 0., double pZ = 0.);
   static void AddParticleType(const char *name, double mass, int charge,
                               double width = 0.);
   static void PrintParticleTypeArray();
 
-  int const GetIndex() const;
+  int GetIndex() const;
   void SetIndex(int index);
   void SetIndex(const char *ParticleName);
   void PrintParticle() const;
 
   double GetMass() const;
+  double GetCharge() const;
   double EnergyTot() const;
-  double InvMass(Particle &p);
+  double InvMass(const Particle &p) const;
 
   void SetP(double pX, double pY, double pZ);
+
+  int Decay2body(Particle &dau1, Particle &dau2) const;
 
  private:
   static const int maxNumParticleType_{7};
@@ -57,6 +62,7 @@ class Particle {
   double pX_, pY_, pZ_;
 
   int FindParticle(const char *particleName_);
+  void Boost(double bx, double by, double bz);
 };
 
 #endif
