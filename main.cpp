@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "TCanvas.h"
+#include "TFile.h"
 #include "TH1F.h"
 #include "TH1I.h"
 #include "TMath.h"
@@ -201,7 +202,8 @@ void Main() {
   c1->cd(6);
   hEnergy->Draw();
 
-  auto c2 = new TCanvas("c2", "massa invariante con varie combinazioni", 200, 10, 1200, 800);
+  auto c2 = new TCanvas("c2", "massa invariante con varie combinazioni", 200,
+                        10, 1200, 800);
   c2->Divide(3, 2);
   c2->cd(1);
   hInvMass->Draw();
@@ -215,4 +217,22 @@ void Main() {
   hInvMassComb2->Draw();
   c2->cd(6);
   hInvMassK->Draw();
+
+  TFile *file = new TFile("output_file.root", "RECREATE");
+
+  hParticleType->Write();
+  hDistributionTheta->Write();
+  hDistributionPhi->Write();
+  hImpulse->Write();
+  hImpulseT->Write();
+  hEnergy->Write();
+  hInvMass->Write();
+  hInvMassDisc->Write();
+  hInvMassConc->Write();
+  hInvMassComb1->Write();
+  hInvMassComb2->Write();
+  hInvMassK->Write();
+
+  file->Close();
+  delete file;
 }
