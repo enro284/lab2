@@ -1,4 +1,4 @@
 void compile() { 
     gROOT->LoadMacro("particle.cpp+");
-    gROOT->LoadMacro("main.cpp+"); 
+    gROOT->LoadMacro("main.cpp++"); 
 }
