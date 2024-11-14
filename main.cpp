@@ -2,14 +2,14 @@
 
 #include "TCanvas.h"
 #include "TFile.h"
-#include "TH1F.h"
+#include "TH1D.h"
 #include "TH1I.h"
 #include "TMath.h"
 #include "TRandom.h"
 #include "TRandom3.h"
 #include "particle.hpp"
 
-#define NBINS 50
+#define NBINS 100
 #define ARR_SIZE 500
 
 void Main() {
@@ -25,7 +25,7 @@ void Main() {
   gRandom = new TRandom3();
   gRandom->SetSeed();
 
-  const int nEvents = 10000;
+  const int nEvents = 100000;
   const int nParticlePerEvents = 100;
 
   Particle *EventParticles[ARR_SIZE];
@@ -36,38 +36,38 @@ void Main() {
   auto hParticleType = new TH1I("hParticleType", "tipi di particelle", 7, 0, 7);
 
   auto hDistributionTheta =
-      new TH1F("hDistributionTheta", "distribuzione angoli theta", NBINS, 0.,
+      new TH1D("hDistributionTheta", "distribuzione angoli theta", NBINS, 0.,
                TMath::Pi());
   auto hDistributionPhi =
-      new TH1F("hDistributionPhi", "distribuzione angoli phi", NBINS, 0.,
+      new TH1D("hDistributionPhi", "distribuzione angoli phi", NBINS, 0.,
                2 * TMath::Pi());
-  auto hImpulse = new TH1F("hImpulse", "impulso", NBINS, 0., 8.);
-  auto hImpulseT = new TH1F("hImpulseT", "impulso trasverso", NBINS, 0., 8.);
+  auto hImpulse = new TH1D("hImpulse", "impulso", NBINS, 0., 8.);
+  auto hImpulseT = new TH1D("hImpulseT", "impulso trasverso", NBINS, 0., 8.);
   auto hEnergy =
-      new TH1F("hEnergy", "istogramma energia della particella", NBINS, 0., 8.);
-  auto hInvMass = new TH1F("hInvMass", "massa invariante", NBINS, 0., 8.);
+      new TH1D("hEnergy", "istogramma energia della particella", NBINS, 0., 8.);
+  auto hInvMass = new TH1D("hInvMass", "massa invariante", NBINS, 0., 8.);
 
-  auto hInvMassDisc = new TH1F("hInvMassDisc",
+  auto hInvMassDisc = new TH1D("hInvMassDisc",
                                "massa invariante in combinazione "
                                "con carica di segno discorde",
                                NBINS, 0., 8.);
   hInvMassDisc->Sumw2();
-  auto hInvMassConc = new TH1F("hInvMassConc",
+  auto hInvMassConc = new TH1D("hInvMassConc",
                                "massa invariante in combinazione "
                                "con carica di segno concorde",
                                NBINS, 0., 8.);
   hInvMassConc->Sumw2();
-  auto hInvMassComb1 = new TH1F("hInvMassComb1",
+  auto hInvMassComb1 = new TH1D("hInvMassComb1",
                                 "massa invariante con combinazioni "
                                 "di tipo pione+/Kaone- e pione-/kaone+",
                                 NBINS, 0., 8.);
   hInvMassDisc->Sumw2();
-  auto hInvMassComb2 = new TH1F("hInvMassComb2",
+  auto hInvMassComb2 = new TH1D("hInvMassComb2",
                                 "massa invariante con combinazioni "
                                 "di tipo pione+/Kaone+ e pione-/kaone-",
                                 NBINS, 0., 8.);
   hInvMassConc->Sumw2();
-  auto hInvMassK = new TH1F("hInvMassK",
+  auto hInvMassK = new TH1D("hInvMassK",
                             "istogramma massa invariante fra le particelle che "
                             "derivano dal decadimento di k*",
                             NBINS, 0.5, 1.3);
@@ -77,7 +77,6 @@ void Main() {
     int nFiglie{0};
     for (int j{0}; j < nParticlePerEvents; ++j) {
       x = gRandom->Rndm();
-      x = gRandom->Uniform(0., 0.8);
       if (x < 0.4) {
         EventParticles[j]->SetIndex("pione+");
         hParticleType->Fill(particleNames[0], 1);

@@ -3,7 +3,7 @@
 #include "TCanvas.h"
 #include "TF1.h"
 #include "TFile.h"
-#include "TH1F.h"
+#include "TH1D.h"
 #include "TH1I.h"
 
 using namespace std;
@@ -14,17 +14,17 @@ void histo() {
   TFile *file = TFile::Open("output_file.root", "READ");
 
   auto hParticleType = file->Get<TH1I>("hParticleType");
-  auto hDistributionTheta = file->Get<TH1F>("hDistributionTheta");
-  auto hDistributionPhi = file->Get<TH1F>("hDistributionPhi");
-  auto hImpulse = file->Get<TH1F>("hImpulse");
-  auto hImpulseT = file->Get<TH1F>("hImpulseT");
-  auto hEnergy = file->Get<TH1F>("hEnergy");
-  auto hInvMass = file->Get<TH1F>("hInvMass");
-  auto hInvMassDisc = file->Get<TH1F>("hInvMassDisc");
-  auto hInvMassConc = file->Get<TH1F>("hInvMassConc");
-  auto hInvMassComb1 = file->Get<TH1F>("hInvMassComb1");
-  auto hInvMassComb2 = file->Get<TH1F>("hInvMassComb2");
-  auto hInvMassK = file->Get<TH1F>("hInvMassK");
+  auto hDistributionTheta = file->Get<TH1D>("hDistributionTheta");
+  auto hDistributionPhi = file->Get<TH1D>("hDistributionPhi");
+  auto hImpulse = file->Get<TH1D>("hImpulse");
+  auto hImpulseT = file->Get<TH1D>("hImpulseT");
+  auto hEnergy = file->Get<TH1D>("hEnergy");
+  auto hInvMass = file->Get<TH1D>("hInvMass");
+  auto hInvMassDisc = file->Get<TH1D>("hInvMassDisc");
+  auto hInvMassConc = file->Get<TH1D>("hInvMassConc");
+  auto hInvMassComb1 = file->Get<TH1D>("hInvMassComb1");
+  auto hInvMassComb2 = file->Get<TH1D>("hInvMassComb2");
+  auto hInvMassK = file->Get<TH1D>("hInvMassK");
 
   auto c1 = new TCanvas("c1", "generazione particelle", 200, 10, 1200, 800);
   c1->Divide(2, 2);
@@ -89,7 +89,7 @@ void histo() {
        << fImpulse->GetChisquare() / fImpulse->GetNDF() << endl;
   cout << " Probabilità del fit Impulso: " << fImpulse->GetProb() << endl;
 
-  auto hSottr12 = (TH1F*)hInvMassDisc->Clone("hSottr12");
+  auto hSottr12 = (TH1D *)hInvMassDisc->Clone("hSottr12");
   hSottr12->Add(hInvMassConc, -1.);
   // cosmetica
   hSottr12->GetXaxis()->SetTitle("Massa Invariante (GeV/c^2)");
@@ -100,10 +100,9 @@ void histo() {
   */
 
   // grafico sottrazione 34
-  auto hSottr34 = new TH1F("hSottr34", "Sottrazione k+/pi- k-/pi+ e k+/pi+ k-/pi-",
-                           NBINS, 0., 8.);
+  auto hSottr34 = (TH1D *)hInvMassComb1->Clone("hSottr34");
   hSottr34->Sumw2();
-  hSottr34->Add(hInvMassComb1, hInvMassComb2, 1., -1.);
+  hSottr34->Add(hInvMassComb2, -1.);
   // cosmetica
   hSottr34->GetXaxis()->SetTitle("Massa Invariante (GeV/c^2)");
   hSottr34->GetYaxis()->SetTitle("Occorrenze");
@@ -121,8 +120,8 @@ void histo() {
   hInvMassK->Draw();
 
   auto fGaus12 = new TF1("fGaus12", "[0]*exp(-(x-[1])^2/(2*[2]^2))", 0., 8.);
-  fGaus12->SetParameter(0, 5000);
-  fGaus12->SetParameter(1, 1.);
+  fGaus12->SetParameter(0, 1E5);
+  fGaus12->SetParameter(1, 0.89);
   fGaus12->SetParameter(2, 0.5);
 
   hSottr12->Fit(fGaus12);
@@ -140,9 +139,9 @@ void histo() {
   cout << " Probabilità del fit Gaussiana 12 : " << fGaus12->GetProb() << endl;
 
   auto fGaus34 = new TF1("fGaus34", "[0]*exp(-(x-[1])^2/(2*[2]^2))", 0., 8.);
-  fGaus34->SetParameter(0, 7000);
+  fGaus34->SetParameter(0, 1E5);
   fGaus34->SetParameter(1, 0.8);
-  fGaus34->SetParameter(2, 0.);
+  fGaus34->SetParameter(2, 0.05);
   hSottr34->Fit(fGaus34);
 
   cout << " Valore ampiezza fit Gaussiana 34 : " << fGaus34->GetParameter(0)
@@ -159,9 +158,9 @@ void histo() {
   cout << " Probabilità del fit Gaussiana 34: " << fGaus34->GetProb() << endl;
 
   auto fK = new TF1("fK", "[0]*exp(-(x-[1])^2/(2*[2]^2))", 0., 8.);
-  fK->SetParameter(0, 7000);
+  fK->SetParameter(0, 6000);
   fK->SetParameter(1, 0.8);
-  fK->SetParameter(2, 0.);
+  fK->SetParameter(2, 0.05);
   hInvMassK->Fit(fK);
   cout << " Valore ampiezza fit K*: " << fK->GetParameter(0) << '\n' << endl;
   cout << " Valore media fit K* : " << fK->GetParameter(1) << '\n' << endl;
