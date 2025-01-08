@@ -33,15 +33,15 @@ void Main() {
     EventParticles[i] = new Particle("pione+");
   }
 
-  auto hParticleType = new TH1I("hParticleType", "tipi di particelle", 7, 0, 7);
+  auto hParticleType = new TH1I("hParticleType", "Abbondanza di particelle", 7, 0, 7);
 
   auto hDistributionTheta =
-      new TH1D("hDistributionTheta", "distribuzione angoli theta", NBINS, 0.,
+      new TH1D("hDistributionTheta", "distribuzione angolo polare", NBINS, 0.,
                TMath::Pi());
   auto hDistributionPhi =
-      new TH1D("hDistributionPhi", "distribuzione angoli phi", NBINS, 0.,
+      new TH1D("hDistributionPhi", "distribuzione angolo azimutale", NBINS, 0.,
                2 * TMath::Pi());
-  auto hImpulse = new TH1D("hImpulse", "impulso", NBINS, 0., 8.);
+  auto hImpulse = new TH1D("hImpulse", "distribuzione dell'impulso", NBINS, 0., 8.);
   auto hImpulseT = new TH1D("hImpulseT", "impulso trasverso", NBINS, 0., 8.);
   auto hEnergy =
       new TH1D("hEnergy", "istogramma energia della particella", NBINS, 0., 8.);
@@ -61,16 +61,29 @@ void Main() {
                                 "massa invariante con combinazioni "
                                 "di tipo pione+/Kaone- e pione-/kaone+",
                                 NBINS, 0., 8.);
-  hInvMassDisc->Sumw2();
+  hInvMassComb1->Sumw2();
   auto hInvMassComb2 = new TH1D("hInvMassComb2",
                                 "massa invariante con combinazioni "
                                 "di tipo pione+/Kaone+ e pione-/kaone-",
                                 NBINS, 0., 8.);
-  hInvMassConc->Sumw2();
+  hInvMassComb2->Sumw2();
   auto hInvMassK = new TH1D("hInvMassK",
-                            "istogramma massa invariante fra le particelle che "
-                            "derivano dal decadimento di k*",
+                            "massa invariante delle k*",
                             NBINS, 0.5, 1.3);
+
+
+  hParticleType->GetXaxis()->SetTitle("Tipologia di particelle");
+  hParticleType->GetYaxis()->SetTitle("Abbondanza particelle");
+  hDistributionTheta->GetXaxis()->SetTitle("Angolo theta [rad]");
+  hDistributionTheta->GetYaxis()->SetTitle("Occorrenze");
+  hDistributionPhi->GetXaxis()->SetTitle("Angolo phi [rad]");
+  hDistributionPhi->GetYaxis()->SetTitle("Occorrenze");
+  hInvMassK->GetXaxis()->SetTitle("Distribuzione delle K*");
+  hInvMassK->GetYaxis()->SetTitle("Occorrenze");
+  hImpulse->GetXaxis()->SetTitle("Occorrenze");
+   hImpulse->GetYaxis()->SetTitle("Impulso delle particelle [kg m/s]");
+  
+
 
   for (int event{0}; event < nEvents; ++event) {
     double x;

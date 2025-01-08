@@ -7,12 +7,12 @@ int Particle::numParticleType_{0};
 const ParticleType *Particle::particleTypeArray_[maxNumParticleType_];
 
 int main() {
-  ParticleType particleType{"particella bella", 10., 5};
+  ParticleType particleType{"particella", 10., 5};
   particleType.Print();
   std::cout << particleType.GetName() << ' ' << particleType.GetMass() << ' '
             << particleType.GetCharge() << '\n';
 
-  ResonanceType resonanceType{"particella meno bella", 13., 4, 100.};
+  ResonanceType resonanceType{"particella con risonanza", 13., 4, 100.};
   resonanceType.Print();
   std::cout << resonanceType.GetName() << ' ' << resonanceType.GetMass() << ' '
             << resonanceType.GetCharge() << ' ' << resonanceType.GetWidth()
