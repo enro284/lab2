@@ -88,7 +88,8 @@ void histo() {
   cout << " Chiquadro ridotto fit Impulso: "
        << fImpulse->GetChisquare() / fImpulse->GetNDF() << endl;
   cout << " Probabilità del fit Impulso: " << fImpulse->GetProb() << endl;
-  cout << "Media dell'istogramma : "<< hImpulse->GetMean() << "+/-" << hImpulse->GetMeanError()<< endl;
+  cout << "Media dell'istogramma : " << hImpulse->GetMean() << "+/-"
+       << hImpulse->GetMeanError() << endl;
 
   // sottrazione 12
   auto hSottr12 = (TH1D *)hInvMassDisc->Clone("hSottr12");
@@ -124,10 +125,11 @@ void histo() {
 
   hSottr12->Fit(fGaus12);
 
-  cout << " Valore ampiezza fit Gaussiana 12: " << fGaus12->GetParameter(0) << "+/-" << fGaus12->GetParError(0) 
-       << '\n'
+  cout << " Valore ampiezza fit Gaussiana 12: " << fGaus12->GetParameter(0)
+       << "+/-" << fGaus12->GetParError(0) << '\n'
        << endl;
-  cout << " Valore media fit Gaussiana 12: " << fGaus12->GetParameter(1) << "+/-" << fGaus12->GetParError(1) << '\n'
+  cout << " Valore media fit Gaussiana 12: " << fGaus12->GetParameter(1)
+       << "+/-" << fGaus12->GetParError(1) << '\n'
        << endl;
   cout << " Valore deviazione standard fit Gaussiana 12: "
        << fGaus12->GetParameter(2) << "+/-" << fGaus12->GetParError(2) << '\n'
@@ -142,15 +144,14 @@ void histo() {
   fGaus34->SetParameter(2, 0.5);
   hSottr34->Fit(fGaus34);
 
-  cout << " Valore ampiezza fit Gaussiana 34 : " << fGaus34->GetParameter(0) << "+/-" << fGaus34->GetParError(0) 
-       << '\n'
+  cout << " Valore ampiezza fit Gaussiana 34 : " << fGaus34->GetParameter(0)
+       << "+/-" << fGaus34->GetParError(0) << '\n'
        << endl;
-  cout << " Valore media fit Gaussiana 34 : " << fGaus34->GetParameter(1) << "+/-" << fGaus34->GetParError(1) 
-       << '\n'
+  cout << " Valore media fit Gaussiana 34 : " << fGaus34->GetParameter(1)
+       << "+/-" << fGaus34->GetParError(1) << '\n'
        << endl;
   cout << " Valore deviazione standard fit Gaussiana 34 : "
-       << fGaus34->GetParameter(2) << "+/-" << fGaus34->GetParError(2) 
-       << '\n'
+       << fGaus34->GetParameter(2) << "+/-" << fGaus34->GetParError(2) << '\n'
        << endl;
   cout << " Chiquadro ridotto fit Gaussiana 34 : "
        << fGaus34->GetChisquare() / fGaus34->GetNDF() << endl;
@@ -161,19 +162,31 @@ void histo() {
   fK->SetParameter(1, 0.8);
   fK->SetParameter(2, 0.05);
   hInvMassK->Fit(fK);
-  cout << " Valore ampiezza fit K*: " << fK->GetParameter(0) << "+/-" << fK->GetParError(0) << '\n' << endl;
-  cout << " Valore media fit K* : " << fK->GetParameter(1) << "+/-" << fK->GetParError(1) << '\n' << endl;
-  cout << " Valore deviazione standard fit K* : " << fK->GetParameter(2) << "+/-" << fK->GetParError(2)  << '\n'
+  cout << " Valore ampiezza fit K*: " << fK->GetParameter(0) << "+/-"
+       << fK->GetParError(0) << '\n'
+       << endl;
+  cout << " Valore media fit K* : " << fK->GetParameter(1) << "+/-"
+       << fK->GetParError(1) << '\n'
+       << endl;
+  cout << " Valore deviazione standard fit K* : " << fK->GetParameter(2)
+       << "+/-" << fK->GetParError(2) << '\n'
        << endl;
   cout << " Chiquadro ridotto fit K*: " << fK->GetChisquare() / fK->GetNDF()
        << endl;
   cout << " Probabilità del fit K*: " << fK->GetProb() << endl;
 
-  cout << "pigreco + :" << hParticleType->GetBinContent(1) << "+/-" << hParticleType->GetBinError(1)<<endl;
-  cout << "pigreco - :" << hParticleType->GetBinContent(2) << "+/-" << hParticleType->GetBinError(2)<<endl;
-  cout << "k+ :" << hParticleType->GetBinContent(3) << "+/-" << hParticleType->GetBinError(3)<<endl;
-  cout << "k- :" << hParticleType->GetBinContent(4) << "+/-" << hParticleType->GetBinError(4)<<endl;
-  cout << "p+ :" << hParticleType->GetBinContent(5) << "+/-" << hParticleType->GetBinError(5)<<endl;
-  cout << "p- :" << hParticleType->GetBinContent(6) << "+/-" << hParticleType->GetBinError(6)<<endl;
-  cout << "k* : " << hParticleType->GetBinContent(7) << "+/-" << hParticleType->GetBinError(7)<<endl;
+  cout << "pigreco + :" << hParticleType->GetBinContent(1) << "+/-"
+       << hParticleType->GetBinError(1) << endl;
+  cout << "pigreco - :" << hParticleType->GetBinContent(2) << "+/-"
+       << hParticleType->GetBinError(2) << endl;
+  cout << "k+ :" << hParticleType->GetBinContent(3) << "+/-"
+       << hParticleType->GetBinError(3) << endl;
+  cout << "k- :" << hParticleType->GetBinContent(4) << "+/-"
+       << hParticleType->GetBinError(4) << endl;
+  cout << "p+ :" << hParticleType->GetBinContent(5) << "+/-"
+       << hParticleType->GetBinError(5) << endl;
+  cout << "p- :" << hParticleType->GetBinContent(6) << "+/-"
+       << hParticleType->GetBinError(6) << endl;
+  cout << "k* : " << hParticleType->GetBinContent(7) << "+/-"
+       << hParticleType->GetBinError(7) << endl;
 }
