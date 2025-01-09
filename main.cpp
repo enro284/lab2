@@ -33,7 +33,8 @@ void Main() {
     EventParticles[i] = new Particle("pione+");
   }
 
-  auto hParticleType = new TH1I("hParticleType", "Abbondanza di particelle", 7, 0, 7);
+  auto hParticleType =
+      new TH1I("hParticleType", "Abbondanza di particelle", 7, 0, 7);
 
   auto hDistributionTheta =
       new TH1D("hDistributionTheta", "distribuzione angolo polare", NBINS, 0.,
@@ -41,7 +42,8 @@ void Main() {
   auto hDistributionPhi =
       new TH1D("hDistributionPhi", "distribuzione angolo azimutale", NBINS, 0.,
                2 * TMath::Pi());
-  auto hImpulse = new TH1D("hImpulse", "distribuzione dell'impulso", NBINS, 0., 8.);
+  auto hImpulse =
+      new TH1D("hImpulse", "distribuzione dell'impulso", NBINS, 0., 8.);
   auto hImpulseT = new TH1D("hImpulseT", "impulso trasverso", NBINS, 0., 8.);
   auto hEnergy =
       new TH1D("hEnergy", "istogramma energia della particella", NBINS, 0., 8.);
@@ -67,10 +69,8 @@ void Main() {
                                 "di tipo pione+/Kaone+ e pione-/kaone-",
                                 NBINS, 0., 8.);
   hInvMassComb2->Sumw2();
-  auto hInvMassK = new TH1D("hInvMassK",
-                            "massa invariante delle k*",
-                            NBINS, 0.5, 1.3);
-
+  auto hInvMassK =
+      new TH1D("hInvMassK", "massa invariante delle k*", NBINS, 0.5, 1.3);
 
   hParticleType->GetXaxis()->SetTitle("Tipologia di particelle");
   hParticleType->GetYaxis()->SetTitle("Abbondanza particelle");
@@ -81,9 +81,7 @@ void Main() {
   hInvMassK->GetXaxis()->SetTitle("Distribuzione delle K*");
   hInvMassK->GetYaxis()->SetTitle("Occorrenze");
   hImpulse->GetXaxis()->SetTitle("Occorrenze");
-   hImpulse->GetYaxis()->SetTitle("Impulso delle particelle [kg m/s]");
-  
-
+  hImpulse->GetYaxis()->SetTitle("Impulso delle particelle [kg m/s]");
 
   for (int event{0}; event < nEvents; ++event) {
     double x;
@@ -147,7 +145,7 @@ void Main() {
         nFiglie += 2;
       }
     }
-    // invariant mass
+    //  massa invariante
     for (int i{0}; i < nParticlePerEvents; ++i) {
       for (int j{i + 1}; j < nParticlePerEvents; ++j) {
         hInvMass->Fill(EventParticles[i]->InvMass(*EventParticles[j]));
@@ -156,13 +154,13 @@ void Main() {
 
     for (int i{0}; i < nParticlePerEvents + nFiglie; ++i) {
       for (int j{i + 1}; j < nParticlePerEvents + nFiglie; ++j) {
-        // invariant mass discord
+        // massa invariante carica discorde
         if (EventParticles[i]->GetCharge() * EventParticles[j]->GetCharge() ==
             -1.) {
           hInvMassDisc->Fill(EventParticles[i]->InvMass(*EventParticles[j]));
         }
 
-        // invariant mass concord
+        // massa invariante carica concorde
         if (EventParticles[i]->GetCharge() * EventParticles[j]->GetCharge() ==
             1.) {
           hInvMassConc->Fill(EventParticles[i]->InvMass(*EventParticles[j]));
@@ -177,10 +175,10 @@ void Main() {
         }
 
         // massa invariante fra tutte le particelle con pi+/k+ e pi-/k-
-        if (i != j && ((EventParticles[i]->GetIndex() == 0 &&
-                        EventParticles[j]->GetIndex() == 2) ||
-                       (EventParticles[i]->GetIndex() == 1 &&
-                        EventParticles[j]->GetIndex() == 3))) {
+        if (((EventParticles[i]->GetIndex() == 0 &&
+              EventParticles[j]->GetIndex() == 2) ||
+             (EventParticles[i]->GetIndex() == 1 &&
+              EventParticles[j]->GetIndex() == 3))) {
           hInvMassComb2->Fill(EventParticles[i]->InvMass(*EventParticles[j]));
         }
       }

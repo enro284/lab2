@@ -2,11 +2,6 @@
 #define PARTICLE_HPP
 
 class ParticleType {
- private:
-  const char *name_;
-  const double mass_;
-  const int charge_;
-
  public:
   ParticleType(const char *name, double mass, int charge)
       : name_{name}, mass_{mass}, charge_{charge} {}
@@ -17,6 +12,11 @@ class ParticleType {
   virtual double GetWidth() const;
 
   virtual void Print() const;
+
+ private:
+  const char *name_;
+  const double mass_;
+  const int charge_;
 };
 
 class ResonanceType : public ParticleType {

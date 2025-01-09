@@ -90,18 +90,15 @@ void histo() {
   cout << " Probabilità del fit Impulso: " << fImpulse->GetProb() << endl;
   cout << "Media dell'istogramma : "<< hImpulse->GetMean() << "+/-" << hImpulse->GetMeanError()<< endl;
 
+  // sottrazione 12
   auto hSottr12 = (TH1D *)hInvMassDisc->Clone("hSottr12");
   hSottr12->Add(hInvMassConc, -1.);
   // cosmetica
   hSottr12->SetTitle("Massa invariante, sottrazione 1");
   hSottr12->GetXaxis()->SetTitle("Massa Invariante [GeV/c^2]");
   hSottr12->GetYaxis()->SetTitle("Occorrenze");
-  /*
-    hSottr12->SetAxisRange(0., 5., "X");
-    hSottr12->SetAxisRange(-20000., 200000., "Y");
-  */
 
-  // grafico sottrazione 34
+  // sottrazione 34
   auto hSottr34 = (TH1D *)hInvMassComb1->Clone("hSottr34");
   hSottr34->Sumw2();
   hSottr34->Add(hInvMassComb2, -1.);
@@ -109,8 +106,6 @@ void histo() {
   hSottr34->SetTitle("Massa invariante, sottrazione 2");
   hSottr34->GetXaxis()->SetTitle("Massa Invariante [GeV/c^2]");
   hSottr34->GetYaxis()->SetTitle("Occorrenze");
-  /* hSottr34->SetAxisRange(xmin,xmax,*axis="X");
-  hSottr34->SetAxisRange(ymin,ymax,*axis="Y"); */
 
   auto c3 = new TCanvas("c3", "Istogramma sottrazione 1-2 e 3-4 e K*", 200, 10,
                         1200, 800);
