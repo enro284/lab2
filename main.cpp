@@ -10,7 +10,7 @@
 #include "particle.hpp"
 
 #define NBINS 100
-#define ARR_SIZE 500
+#define ARR_SIZE 150
 
 void Main() {
   const char *particleNames[7] = {"#pi+", "#pi-", "k+", "k-", "p+", "p-", "k*"};
